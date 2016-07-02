@@ -1,5 +1,20 @@
 source 'https://rubygems.org'
 
+#devise
+gem 'devise'
+#omniauth
+gem 'omniauth-twitter'
+gem 'omniauth-facebook'
+gem 'omniauth-instagram'
+gem 'twitter'
+gem 'instagram'
+gem 'omniauth-google-oauth2'
+# the version is important here, otherwise get an error
+gem 'google-api-client', '~> 0.7.1',require: 'google/api_client'
+#dotenv
+gem 'dotenv-rails', :groups => [:development, :test]
+#fb_graph
+gem 'fb_graph'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.6'
@@ -44,4 +59,3 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 end
-
