@@ -8,6 +8,8 @@ gem 'omniauth-facebook'
 gem 'omniauth-instagram'
 gem 'twitter'
 gem 'instagram'
+gem 'omniauth-github'
+gem 'omniauth-linkedin-oauth2'
 gem 'omniauth-google-oauth2'
 # the version is important here, otherwise get an error
 gem 'google-api-client', '~> 0.7.1',require: 'google/api_client'
