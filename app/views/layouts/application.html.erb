@@ -8,6 +8,25 @@
 </head>
 <body>
 
+  <% if user_signed_in? %>
+   Logged in as <strong><%= current_user.email %></strong>.
+   <%= link_to 'Edit profile', edit_user_registration_path %> |
+   <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+  <% else %>
+   <%= link_to "Sign up", new_user_registration_path %> |
+   <%= link_to "Login", new_user_session_path %>
+  <% end %>
+ <li><%= link_to "Twitter", user_twitter_omniauth_authorize_path %></li>
+ <li><%= link_to "Facebook", user_facebook_omniauth_authorize_path %></li>
+ <li><%= link_to "Google", user_google_oauth2_omniauth_authorize_path %></li>
+ <li><%= link_to "Instragram", user_instagram_omniauth_authorize_path  %></li>
+ <li><%= link_to "Linkedin", user_linkedin_omniauth_authorize_path %></li>
+ <li><%= link_to "Github", user_github_omniauth_authorize_path %></li>
+
+
+  <p class="notice"><%= notice %></p>
+  <p class="alert"><%= alert %></p>
+
 <%= yield %>
 
 </body>
