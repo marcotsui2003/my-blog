@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
   devise_for :users, path_names: {sign_in: "login", sign_out: "logout"},
   controllers: {omniauth_callbacks: "omniauth_callbacks", registrations: "registrations"}
-
+  devise_scope :user do
+    get '/users/twitter_first_signup', to:"registrations#twitter_new", as: 'new_twitter_registration'
+    post '/users/twitter_first_signup', to:"registrations#twitter_create"
+  end
   resources :authorizations
 
   root 'welcome#home'
