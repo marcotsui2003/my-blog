@@ -7,6 +7,10 @@ class User < ActiveRecord::Base
   validates_presence_of :email
 
   has_many :authorizations
+  has_many :posts
+  has_many :categories, through: :posts
+  has_many :comments, foreign_key: :commenter_id, inverse_of: :commenter
+  has_many :commented_posts, through: :comments, source: :post
 
   def self.new_with_session(params,session)
     if session["devise.user_attributes"]
