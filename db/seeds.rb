@@ -23,4 +23,10 @@ mary.commented_posts << post1
 
 peter.commented_posts << post2
 
-david.comments.create(post: post2)
+comment1 = david.comments.create(post: post2)
+reply1 = comment1.replies.create(replier: mary)
+reply2 = comment1.replies.create(replier: peter)
+reply11 = reply1.replies.create(replier: david)
+reply12 = reply1.replies.create(replier: david)
+reply111 = reply11.replies.create(replier: mary)
+reply112 = reply11.replies.create(replier: peter)
