@@ -11,6 +11,9 @@ class User < ActiveRecord::Base
   has_many :categories, through: :posts
   has_many :comments, foreign_key: :commenter_id, inverse_of: :commenter
   has_many :commented_posts, through: :comments, source: :post
+  #foreign_key is necessary here otherwise replies.user_id is used instead when
+  #user.replies is called
+  has_many :replies, foreign_key: :replier_id, inverse_of: :replier
 
   def self.new_with_session(params,session)
     if session["devise.user_attributes"]
