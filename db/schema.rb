@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160705042712) do
+ActiveRecord::Schema.define(version: 20160705152316) do
 
   create_table "authorizations", force: :cascade do |t|
     t.string   "provider"
@@ -52,6 +52,18 @@ ActiveRecord::Schema.define(version: 20160705042712) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "replies", force: :cascade do |t|
+    t.integer  "repliable_id"
+    t.string   "repliable_type"
+    t.text     "content"
+    t.integer  "replier_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "replies", ["repliable_type", "repliable_id"], name: "index_replies_on_repliable_type_and_repliable_id"
+  add_index "replies", ["replier_id"], name: "index_replies_on_replier_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
