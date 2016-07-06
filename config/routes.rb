@@ -6,6 +6,12 @@ Rails.application.routes.draw do
     post '/users/twitter_first_signup', to:"registrations#twitter_create"
   end
   resources :authorizations
+  resources :users  do
+
+    #resources :posts, only: [:index], as: 'root'
+    resources :posts, only: [:create, :new, :update, :edit]
+  end
+  get '/users/:user_id/posts' => 'posts#index', as: 'user_root'
 
   root 'welcome#home'
   # The priority is based upon order of creation: first created -> highest priority.
