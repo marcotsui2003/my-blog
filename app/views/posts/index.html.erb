@@ -1,0 +1,4 @@
+<h1>Post by <%= current_user.email %>: </h1>
+  <% @posts.each.with_index(1) do |post| %>
+   <%= post.title %>| <%= post.created_at %>
+  <% end %>
