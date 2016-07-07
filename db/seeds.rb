@@ -6,27 +6,38 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+
+#12 users
 peter = User.create(email: "peter@123.com", password: "123456", password_confirmation:"123456")
 mary = User.create(email: "mary@123.com", password: "123456", password_confirmation:"123456")
 david = User.create(email: "david@123.com", password: "123456", password_confirmation:"123456")
+9.times {User.create(email: Faker::Internet.free_email, password: "123456", password_confirmation:"123456")}
 
+#12 posts
 post1 = peter.posts.create(title: "first post")
 post2 = peter.posts.create(title: "second post")
+10.times do
+  User.all[Random.rand(12)].posts.create(title: Faker::Hipster.sentence)
+end
 
+#? categories
 post1.categories.create(name: "science")
 post1.categories.create(name: "fiction")
-
-post2.categories.create(name: "science")
+post2.categories.create(name: "horror")
 post2.categories.create(name: "history")
+12.times do
+  Post.all[Random.rand(12)].categories.find_or_create_by(name: Faker::Hipster.word)
+end
 
-mary.commented_posts << post1
 
-peter.commented_posts << post2
+30.times do
+  User.all[Random.rand(12)].comments.create(post: Post.all[Random.rand(12)],content: Faker::Hipster.sentences(Random.rand(9)).join(" "))
+end
 
-comment1 = david.comments.create(post: post2)
-reply1 = comment1.replies.create(replier: mary)
-reply2 = comment1.replies.create(replier: peter)
-reply11 = reply1.replies.create(replier: david)
-reply12 = reply1.replies.create(replier: david)
-reply111 = reply11.replies.create(replier: mary)
-reply112 = reply11.replies.create(replier: peter)
+40.times do
+  Comment.all[Random.rand(30)].replies.create(replier: User.all[Random.rand(12)], content: Faker::Hipster.sentences(Random.rand(4)).join(" ") )
+end
+
+100.times do
+  Reply.all[Random.rand(40)].replies.create(replier: User.all[Random.rand(12)], content: Faker::Hipster.sentences(1).join(" ") )
+end
