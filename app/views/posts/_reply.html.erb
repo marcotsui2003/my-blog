@@ -1,0 +1,7 @@
+<li>
+  by <%= reply.replier.email %>, at <%= reply.created_at %><br>
+  <%= reply.content %>
+  <ul>
+    <%= render partial: "reply", collection: reply.replies unless reply.replies.blank? %>    
+  </ul>
+</li>
