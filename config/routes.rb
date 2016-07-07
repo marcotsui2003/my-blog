@@ -7,13 +7,14 @@ Rails.application.routes.draw do
   end
   resources :authorizations
   resources :users  do
-
     #resources :posts, only: [:index], as: 'root'
     resources :posts, only: [:create, :new, :update, :edit]
   end
   get '/users/:user_id/posts' => 'posts#index', as: 'user_root'
 
   root 'welcome#home'
+
+  resources :posts, only: [:index, :show]
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
