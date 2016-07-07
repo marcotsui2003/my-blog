@@ -1,4 +1,8 @@
-<h1>Post by <%= current_user.email %>: </h1>
-  <% @posts.each.with_index(1) do |post| %>
-   <%= post.title %>| <%= post.created_at %>
-  <% end %>
+<h1>Posts by <%= current_user.email %>: </h1>
+  <ul>
+    <% @posts.each.with_index(1) do |post, i| %>
+     <li><%= i %>. <%= link_to post.title, post_path(post) %>| <%= post.created_at %> | <%= post.user.email %></li>
+    <% end %>
+  </ul>
+
+<%= link_to "All posts", posts_path %>
