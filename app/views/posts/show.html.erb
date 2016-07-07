@@ -1,0 +1,8 @@
+
+  <%= @post.title %> by <%= @post.user.email %>, created at <%= @post.created_at %><br>
+  <%= @post.content %><br>
+
+  Comments:<br>
+  <ul>
+    <%= render partial: "comment", collection: @comments %>
+  </ul>
