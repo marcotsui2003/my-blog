@@ -1,7 +1,11 @@
-<li>
-  by <%= comment.commenter.email %>, at <%= comment.created_at %><br>
-  <%= comment.content %>
-  <ul>
-    <%= render partial: "reply", collection: comment.replies unless comment.replies.blank? %>    
-  </ul>
-</li>
+
+<%  if !comment.nil? %>
+  <li>
+    by <%= comment.commenter.email %>, at <%= comment.created_at %><br>
+    <%= comment.content %>
+    <%= button_to "Reply", new_post_reply_path(comment.post),method: 'get',:params => {comment_id: comment.id} %>
+    <ul>
+      <%= render partial: "reply", collection: comment.replies, locals:{post: comment.post} unless comment.replies.blank? %>
+    </ul>
+  </li>
+<% end %>
