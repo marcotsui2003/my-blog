@@ -12,6 +12,11 @@ Rails.application.routes.draw do
   end
   get '/users/:user_id/posts' => 'posts#index', as: 'user_root'
 
+  resources :posts do
+    resources :comments, only: [:new, :create]
+    resources :replies, only: [:new, :create]
+  end
+
   root 'welcome#home'
 
   resources :posts, only: [:index, :show]
