@@ -1,0 +1,2 @@
+   <% i =post_counter + 1 %>
+   <li><%= i %>. <%= link_to post.title, post_path(post) %>| <%= post.created_at %> | <%= post.user.email %></li>
