@@ -1,7 +1,8 @@
 <li>
   by <%= reply.replier.email %>, at <%= reply.created_at %><br>
   <%= reply.content %>
+  <%= button_to "Reply", new_post_reply_path(post),method: 'get',:params => {reply_id: reply.id} %>
   <ul>
-    <%= render partial: "reply", collection: reply.replies unless reply.replies.blank? %>    
+    <%= render partial: "reply", collection: reply.replies, locals: {post: post} unless reply.replies.blank? %>
   </ul>
 </li>
