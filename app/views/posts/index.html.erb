@@ -1,8 +1,12 @@
-<h1>Posts by <%= current_user.email %>: </h1>
-  <ul>
-    <% @posts.each.with_index(1) do |post, i| %>
-     <li><%= i %>. <%= link_to post.title, post_path(post) %>| <%= post.created_at %> | <%= post.user.email %></li>
-    <% end %>
-  </ul>
+<% if has_user? %>
+  <h1>Posts by <%= current_user.email %>: </h1>
+<% else %>
+  <h1>All Posts</h1>
+<% end %>
 
+<ul>
+  <%= render partial: 'post', collection: @posts %>
+</ul>
+
+<%= link_to "My own posts", user_root_path(current_user) if user_signed_in? %>
 <%= link_to "All posts", posts_path %>
