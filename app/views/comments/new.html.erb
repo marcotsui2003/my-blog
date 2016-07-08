@@ -1,0 +1,10 @@
+<%= @post.title %>
+<%= @post.content %>
+
+Please add your comment:
+<!-- please note the array format for nested resources -->
+<%= form_for [@post, @comment]  do |f| %>
+  <%= f.label :content %>
+  <%= f.text_field :content %>
+  <%= f.submit "Add Comment" %>
+<% end %>
