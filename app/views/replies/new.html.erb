@@ -1,0 +1,15 @@
+<%= @post.title %>
+<%= @post.content %>
+
+In reply to:
+<%= @repliable.content %>
+
+Please add your reply:
+<!-- please note the array format for nested resources -->
+<%= form_for [@post, @reply]  do |f| %>
+  <%= f.hidden_field :repliable_type %>
+  <%= f.hidden_field :repliable_id%>
+  <%= f.label :content %>
+  <%= f.text_field :content %>
+  <%= f.submit "Add Comment" %>
+<% end %>
