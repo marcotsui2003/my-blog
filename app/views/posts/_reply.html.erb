@@ -1,8 +1,11 @@
 <li>
   by <%= reply.replier.email %>, at <%= reply.created_at %><br>
   <%= reply.content %>
-  <%= button_to "Reply", new_post_reply_path(post),method: 'get',:params => {reply_id: reply.id} %>
+  <%= button_to "Reply", new_post_reply_path(reply.post),method: 'get',:params => {id: reply.id, type: "Reply"} %>
   <ul>
-    <%= render partial: "reply", collection: reply.replies, locals: {post: post} unless reply.replies.blank? %>
+    <!-- need to add locals:{post: post if there is no association between post and reply}
+     i.e post is used instead of reply.post in new_post_reply_path
+     -->
+    <%= render partial: "reply", collection: reply.replies unless reply.replies.blank? %>
   </ul>
 </li>
