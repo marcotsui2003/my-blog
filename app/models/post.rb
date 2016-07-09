@@ -4,4 +4,5 @@ class Post < ActiveRecord::Base
   has_many :categories, through: :post_categories
   has_many :comments, inverse_of: :post
   has_many :commenters, through: :comments
+  has_many :replies, inverse_of: :post
 end
