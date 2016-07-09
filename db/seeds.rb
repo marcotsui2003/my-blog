@@ -35,9 +35,13 @@ end
 end
 
 40.times do
-  Comment.all[Random.rand(30)].replies.create(replier: User.all[Random.rand(12)], content: Faker::Hipster.sentences(Random.rand(4)).join(" ") )
+  reply = Comment.all[Random.rand(30)].replies.create(replier: User.all[Random.rand(12)], content: Faker::Hipster.sentences(Random.rand(4)).join(" ") )
+  reply.post = reply.repliable.post
+  reply.save
 end
 
 100.times do
-  Reply.all[Random.rand(40)].replies.create(replier: User.all[Random.rand(12)], content: Faker::Hipster.sentences(1).join(" ") )
+  reply = Reply.all[Random.rand(40)].replies.create(replier: User.all[Random.rand(12)], content: Faker::Hipster.sentences(1).join(" ") )
+  reply.post = reply.repliable.post
+  reply.save
 end
