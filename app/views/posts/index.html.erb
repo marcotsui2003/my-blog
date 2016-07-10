@@ -1,12 +1,15 @@
-<% if has_user? %>
-  <h1>Posts by <%= current_user.email %>: </h1>
-<% else %>
-  <h1>All Posts</h1>
+
+<%= form_tag("/posts", method: "get") do %>
+  <%= select_tag "blogger_id", options_from_collection_for_select(User.all, "id", "email"), include_blank: true,prompt: 'Select blogger' %>
+  <%= select_tag "date", options_for_select(["This week", "This month", "Older posts"]), include_blank: true, prompt: 'Select Date' %>
+  <%= select_tag "category", options_from_collection_for_select(Category.all, "id", "name"), include_blank: true, prompt: 'Select Categories' %>
+  <%= submit_tag "Filter" %>
 <% end %>
 
-<ul>
-  <%= render partial: 'post', collection: @posts %>
-</ul>
-
-<%= link_to "My own posts", user_root_path(current_user) if user_signed_in? %>
-<%= link_to "All posts", posts_path %>
+<% if @posts.blank? %>
+  <%= "No post matches the criteria" %>
+<% else %>
+  <ul>
+    <%= render partial: 'post', collection: @posts  %>
+  </ul>
+<% end %>
