@@ -1,10 +1,6 @@
 class PostsController < ApplicationController
   def index
-    if params[:user_id]
-      @posts = Post.where(user_id: params[:user_id])
-    else
-      @posts = Post.all
-    end
+    @posts = Post.pick_blogger(params[:blogger_id]).by_category(params[:category])
   end
 
   def show
