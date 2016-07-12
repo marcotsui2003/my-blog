@@ -14,6 +14,27 @@ class PostsController < ApplicationController
     @comments = @post.comments
   end
 
+  def new
+    @user = User.find_by(id: params[:user_id])
+    @post = @user.posts.build
+    5.times {@post.categories.build}
+  end
 
+  def create
+    @user = User.find_by(id: params[:user_id])
+    @post = Post.new(post_params)
+    @post.user_id = params[:user_id]
+    if @post.save
+      flash[:notice] = "Post successfully created."
+      return redirect_to post_path @post
+    else
+      render 'new'
+    end
+  end
+
+  private
+  def post_params
+    params.require(:post).permit(:title, :content, categories_attributes: [:name])
+  end
 
 end
