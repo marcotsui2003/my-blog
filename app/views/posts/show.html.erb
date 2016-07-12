@@ -1,6 +1,9 @@
 
   <%= @post.title %> by <%= @post.user.email %>, created at <%= @post.created_at %><br>
   <%= @post.content %><br>
+  Categories:<% @post.categories.each do |category| %>
+    <%= category.name %>
+  <% end %>
   <%= button_to "Add comment", new_post_comment_path(@post.id), method: 'get' %>
 
   Comments:<br>
