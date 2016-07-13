@@ -5,8 +5,8 @@ class Post < ActiveRecord::Base
   has_many :comments, inverse_of: :post
   has_many :commenters, through: :comments
   has_many :replies, inverse_of: :post
-
   accepts_nested_attributes_for :categories
+
 
   def self.pick_blogger(user_id)
     if user_id.blank?
@@ -37,14 +37,13 @@ class Post < ActiveRecord::Base
   end
 
   def categories_attributes=(category_attributes)
-    category_attributes.values.each do |category_name|
-      category = Category.find_or_create_by(category_name)
-      self.categories << category
+    index = category_attributes.values.map do |category_name|
+      Category.find_or_create_by(category_name).id
       #below wont work coz @post has not been saved:
       #self.categories << category unless self.categories.exists?(category)
       #use category_ids = category_ids.uniq after save..
     end
-    unique_category_ids = self.category_ids.uniq
+    unique_category_ids = index.uniq
     self.categories.clear
     self.category_ids = unique_category_ids
   end
