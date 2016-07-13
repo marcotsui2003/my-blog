@@ -11,8 +11,13 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = Post.find(params[:id])
-    @comments = @post.comments
+    @post = Post.find_by(id: params[:id])
+    if !@post.nil?
+      @comments = @post.comments
+    else
+      flash[:alert] = "No such post exists."
+      redirect_to posts_path
+    end
   end
 
   def new
@@ -50,6 +55,12 @@ class PostsController < ApplicationController
       render 'edit'
     end
   end
+
+  def destroy
+    Post.find_by(params[:id]).destroy
+    redirect_to posts_path
+  end
+
 
   private
   def post_params
