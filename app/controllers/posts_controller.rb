@@ -1,7 +1,6 @@
 class PostsController < ApplicationController
   # need before_action :authenticate_user! own_this_post?
 
-
   def index
     @blogger_id = params[:blogger_id]
     @category_id = params[:category_id]
@@ -32,9 +31,28 @@ class PostsController < ApplicationController
     end
   end
 
+  def edit
+    @user = User.find_by(id: params[:user_id])
+    @post = @user.posts.find_by(id: params[:id])
+    2.times {@post.categories.build}
+  end
+
+  def update
+    @user = User.find_by(id: params[:user_id])
+    @post = @user.posts.find_by(id: params[:id])
+    @post.attributes = post_params
+    if @post.save
+      flash[:notice] = "Post successfully created."
+      return redirect_to post_path @post
+    else
+      render 'edit'
+    end
+  end
+
   private
   def post_params
     params.require(:post).permit(:title, :content, categories_attributes: [:name])
   end
 
+  
 end
