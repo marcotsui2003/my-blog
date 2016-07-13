@@ -5,6 +5,7 @@
     <%= category.name %>
   <% end %>
   <%= button_to "Add comment", new_post_comment_path(@post.id), method: 'get' %>
+  <%= button_to "Edit post", edit_user_post_path(@post.user, @post), {method:'get'} if own_post?(@post) %>
 
   Comments:<br>
   <ul>
