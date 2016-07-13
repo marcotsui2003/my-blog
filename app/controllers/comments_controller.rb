@@ -8,21 +8,23 @@ class CommentsController < ApplicationController
   end
 
   def create
-    post = Post.find(params[:post_id])
-    if post.nil?
+    @post = Post.find(params[:post_id])
+    if @post.nil?
       flash[:alert] = "No such post exists."
       return redirect_to posts_path
     else
-      comment = post.comments.build(content: comment_params[:content],
+      @comment = @post.comments.build(content: comment_params[:content],
                                     commenter: current_user)
-      if comment.save
+      if @comment.save
         flash[:notice] = "Comment successfully created."
+        return redirect_to post_path @post
       else
-        flash[:alert] = "Comment fails to be created."
+        render 'new'
       end
-      return redirect_to post_path post
     end
   end
+
+  
 
 
   private
