@@ -1,18 +1,31 @@
+<% if @post.errors.any? %>
+  <div id="error_explanation">
+    <h2>
+      <%= pluralize(@post.errors.count, "error") %>
+      prohibited this post from being saved:
+    </h2>
+    <ul>
+    <% @post.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
 
-  <%= @post.title %> by <%= @post.user.email %>, created at <%= @post.created_at %><br>
-  <%= @post.content %><br>
-  Categories:<% @post.categories.each do |category| %>
-    <%= category.name %>
-  <% end %>
-  <%= button_to "Add comment", new_post_comment_path(@post.id), method: 'get' %>
-  <%= button_to "Edit post", edit_user_post_path(@post.user, @post), {method:'get'} if own_post?(@post) %>
-  <%= button_to "Delete post", user_post_path(@post.user, @post), {method:'delete'} if own_post?(@post) %>
+<%= @post.title %> by <%= @post.user.email %>, created at <%= @post.created_at %><br>
+<%= @post.content %><br>
+Categories:<% @post.categories.each do |category| %>
+  <%= category.name %>
+<% end %>
+<%= button_to "Add comment", new_post_comment_path(@post.id), method: 'get' %>
+<%= button_to "Edit post", edit_user_post_path(@post.user, @post), {method:'get'} if own_post?(@post) %>
+<%= button_to "Delete post", user_post_path(@post.user, @post), {method:'delete'} if own_post?(@post) %>
 
 
-  Comments:<br>
-  <ul>
-    <%= render partial: "comment", collection: @comments %>
-  </ul>
+Comments:<br>
+<ul>
+  <%= render partial: "comment", collection: @comments %>
+</ul>
 
-  <%= link_to "My own posts", user_root_path(current_user) if user_signed_in? %>
-  <%= link_to "All posts", posts_path %>
+<%= link_to "My own posts", user_root_path(current_user) if user_signed_in? %>
+<%= link_to "All posts", posts_path %>
