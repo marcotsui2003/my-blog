@@ -7,6 +7,8 @@ class Post < ActiveRecord::Base
   has_many :replies, inverse_of: :post
   accepts_nested_attributes_for :categories
 
+  validates_presence_of :title, :content
+  validates_uniqueness_of :title
 
   def self.pick_blogger(user_id)
     if user_id.blank?
@@ -49,3 +51,13 @@ class Post < ActiveRecord::Base
   end
 
 end
+
+=begin
+create_table "posts", force: :cascade do |t|
+  t.integer  "user_id"
+  t.string   "title"
+  t.text     "content"
+  t.datetime "created_at", null: false
+  t.datetime "updated_at", null: false
+end
+=end
