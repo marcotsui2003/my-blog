@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   resources :authorizations
   resources :users  do
     #resources :posts, only: [:index], as: 'root'
-    resources :posts, only: [:create, :new, :update, :edit]
+    resources :posts, only: [:create, :new, :update, :edit, :destroy]
   end
   get '/users/:user_id/posts' => 'posts#index', as: 'user_root'
 
