@@ -8,7 +8,7 @@ class Post < ActiveRecord::Base
   accepts_nested_attributes_for :categories
 
   validates_presence_of :title, :content
-  validates_uniqueness_of :title
+  validates_uniqueness_of :title, scope: :user
 
   def self.pick_blogger(user_id)
     if user_id.blank?
