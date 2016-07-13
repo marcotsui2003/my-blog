@@ -14,10 +14,10 @@ david = User.create(email: "david@123.com", password: "123456", password_confirm
 9.times {User.create(email: Faker::Internet.free_email, password: "123456", password_confirmation:"123456")}
 
 #12 posts
-post1 = peter.posts.create(title: "first post")
-post2 = peter.posts.create(title: "second post")
+post1 = peter.posts.create(title: "first post", content: Faker::Hipster.paragraph(10, true, 4))
+post2 = peter.posts.create(title: "second post", content: Faker::Hipster.paragraph(10, true, 4))
 10.times do
-  User.all[Random.rand(12)].posts.create(title: Faker::Hipster.sentence)
+  User.all[Random.rand(12)].posts.create(title: Faker::Hipster.sentence, content: Faker::Hipster.paragraph(Random.rand(12), true, 4))
 end
 
 #? categories
