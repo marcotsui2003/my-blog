@@ -3,6 +3,7 @@
   <li>
     by <%= comment.commenter.email %>, at <%= comment.created_at %><br>
     <%= comment.content %>
+    <%= button_to "Edit comment", edit_post_comment_path(comment.post, comment), {method:'get'} if can_edit_comment?(comment) %>
     <%= button_to "Reply", new_post_reply_path(comment.post),method: 'get',:params => {id: comment.id, type: "Comment"} %>
     <ul>
       <%= render partial: "reply", collection: comment.replies, locals:{post: comment.post} unless comment.replies.blank? %>
