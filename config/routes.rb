@@ -13,8 +13,8 @@ Rails.application.routes.draw do
   get '/users/:user_id/posts' => 'posts#index', as: 'user_root'
 
   resources :posts do
-    resources :comments, only: [:new, :create]
-    resources :replies, only: [:new, :create]
+    resources :comments, only: [:new, :create, :update, :edit, :destroy]
+    resources :replies, only: [:new, :create, :update, :edit, :destroy]
   end
 
   root 'welcome#home'
