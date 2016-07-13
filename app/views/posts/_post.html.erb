@@ -2,3 +2,4 @@
    <li><%= i %>. <%= link_to post.title, post_path(post) %>| <%= post.created_at %> | <%= post.user.email %></li>
     <%= button_to "Edit post", edit_user_post_path(post.user, post), {method:'get'} if own_post?(post) %>
     <%= button_to "Add comment", new_post_comment_path(post.id), method: 'get' %>
+    <%= button_to "Delete post", user_post_path(post.user, post), {method:'delete'} if own_post?(post) %>
