@@ -1,5 +1,7 @@
 class PostsController < ApplicationController
   # need before_action :authenticate_user! own_this_post?
+   before_action :authenticate_user!
+   before_action :right_to_post?, except: [:index, :show]
 
   def index
     @blogger_id = params[:blogger_id]
@@ -54,5 +56,10 @@ class PostsController < ApplicationController
     params.require(:post).permit(:title, :content, categories_attributes: [:name])
   end
 
-  
+  def right_to_post?
+    unless params[:user_id].to_i == current_user.id
+      return redirect_to posts_path, alert: "You do not have right to create/modify this post"
+    end
+  end
+
 end
