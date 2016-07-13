@@ -26,8 +26,24 @@ class CommentsController < ApplicationController
     end
   end
 
+  def edit
+    @post = Post.find_by(id: params[:post_id])
+    return redirect_to posts_path, alert: "No such post." if @post.nil?
+    @comment = @post.comments.find_by(id: params[:id])
+    return redirect_to post_path(@post), alert: "Comment not found." if @comment.nil?
+  end
 
-
+  def update
+    @post = Post.find_by(id: params[:post_id])
+    @comment = @post.comments.find_by(id: params[:id])
+    @comment.attributes = comment_params
+    if @comment.save
+      flash[:notice] = "Comment successfully updated."
+      return redirect_to post_path @post
+    else
+      render 'edit'
+    end
+  end
 
   private
   def comment_params
