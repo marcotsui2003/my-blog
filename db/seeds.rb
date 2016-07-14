@@ -31,11 +31,11 @@ end
 
 
 30.times do
-  User.all[Random.rand(12)].comments.create(post: Post.all[Random.rand(12)],content: Faker::Hipster.sentences(Random.rand(9)).join(" "))
+  User.all[Random.rand(12)].comments.create(post: Post.all[Random.rand(12)],content: Faker::Hipster.sentences(Random.rand(9)+1).join(" "))
 end
 
 40.times do
-  reply = Comment.all[Random.rand(30)].replies.create(replier: User.all[Random.rand(12)], content: Faker::Hipster.sentences(Random.rand(4)).join(" ") )
+  reply = Comment.all[Random.rand(30)].replies.create(replier: User.all[Random.rand(12)], content: Faker::Hipster.sentences(Random.rand(4)+1).join(" ") )
   reply.post = reply.repliable.post
   reply.save
 end
