@@ -1,5 +1,5 @@
 class RepliesController < ApplicationController
-  before_action :authenticate_user!
+
   def new
     @post = Post.find_by(id: params[:post_id])
     return posts_path if @post.nil?
@@ -14,27 +14,31 @@ class RepliesController < ApplicationController
   end
 
   def create
-    post= Post.find(params[:post_id])
-    if post.nil?
+    @post= Post.find(params[:post_id])
+    @repliable = Object.const_get(reply_params[:repliable_type]).find_by(id: reply_params[:repliable_id])
+    if @post.nil?
       flash[:alert] = "No such post exists."
       return redirect_to posts_path
     else
-      reply = Reply.new(reply_params)
-      reply.post = post
-      reply.replier_id = current_user.id
-      if reply.save
+      @reply = @post.replies.build(reply_params)
+      @reply.replier_id = current_user.id
+      if @reply.save
         flash[:notice] = "reply successfully created."
+        return redirect_to post_path @post
       else
-        flash[:alert] = "reply fails to be created."
+        render 'new'
       end
-      return redirect_to post_path post
     end
   end
+
+
 
 
   private
   def reply_params
     params.require(:reply).permit(:content, :repliable_id, :repliable_type)
   end
+
+  
 
 end
