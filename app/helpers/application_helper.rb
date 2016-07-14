@@ -15,6 +15,16 @@ module ApplicationHelper
     end
   end
 
-  
+  def can_edit_reply?(reply)
+    if reply.nil? || reply.replier.nil? ||current_user.nil?
+      false
+    else
+      reply.replier == current_user
+    end
+  end
+
+
+
+
 
 end
