@@ -31,6 +31,25 @@ class RepliesController < ApplicationController
     end
   end
 
+  def edit
+    @post = Post.find_by(id: params[:post_id])
+    return posts_path, alert: "No such post." if @post.nil?
+    @reply = @post.replies.find_by(id: params[:id])
+    @repliable = Object.const_get(@reply.repliable_type).find_by(id: @reply.repliable_id)
+  end
+
+  def update
+    @post = Post.find_by(id: params[:post_id])
+    @reply = @post.replies.find_by(id: params[:id])
+    @repliable = Object.const_get(@reply.repliable_type).find_by(id: @reply.repliable_id)
+    return posts_path, alert: "No such post." if @post.nil?
+    @reply.attributes = reply_params
+    if @reply.save
+      return redirect_to post_path(@post), notice: "Reply successfully updated."
+    else
+      render "edit"
+    end
+  end
 
 
 
@@ -39,6 +58,5 @@ class RepliesController < ApplicationController
     params.require(:reply).permit(:content, :repliable_id, :repliable_type)
   end
 
-  
 
 end
