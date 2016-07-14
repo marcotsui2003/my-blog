@@ -1,0 +1,30 @@
+<% if @reply.errors.any? %>
+  <div id="error_explanation">
+    <h2>
+      <%= pluralize(@reply.errors.count, "error") %>
+      prohibited this comment from being saved:
+    </h2>
+    <ul>
+    <% @reply.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+
+<%= @post.title %>
+<%= @post.content %>
+
+In reply to:
+<%= @repliable.content %>
+
+Please edit your reply:
+<!-- please note the array format for nested resources -->
+<%= form_for [@post, @reply]  do |f| %>
+  <%= f.hidden_field :repliable_type %>
+  <%= f.hidden_field :repliable_id%>
+  <%= f.label :content %>
+  <%= f.text_field :content %>
+  <%= f.submit %>
+<% end %>
