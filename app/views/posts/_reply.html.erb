@@ -1,7 +1,9 @@
 <li>
   by <%= reply.replier.email %>, at <%= reply.created_at %><br>
   <%= reply.content %>
+  <%= button_to "Edit reply", edit_post_reply_path(reply.post, reply),method: 'get' if can_edit_reply?(reply) %>
   <%= button_to "Reply", new_post_reply_path(reply.post),method: 'get',:params => {id: reply.id, type: "Reply"} %>
+
   <ul>
     <!-- need to add locals:{post: post if there is no association between post and reply}
      i.e post is used instead of reply.post in new_post_reply_path
