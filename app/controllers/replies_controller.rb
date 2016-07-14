@@ -1,4 +1,6 @@
 class RepliesController < ApplicationController
+  before_action :authenticate_user!
+  before_action :right_to_edit_reply?, only: [:edit, :update]
 
   def new
     @post = Post.find_by(id: params[:post_id])
@@ -58,5 +60,12 @@ class RepliesController < ApplicationController
     params.require(:reply).permit(:content, :repliable_id, :repliable_type)
   end
 
+  def right_to_edit_reply?
+    reply = Reply.find_by(id: params[:id])
+    unless  reply.post.user == current_user && !reply.nil?
+      return redirect_to post_path(params[:post_id]),
+      alert: "You do not have right to create/modify this reply."
+    end
+  end
 
 end
