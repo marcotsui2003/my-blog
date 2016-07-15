@@ -17,7 +17,7 @@ david = User.create(email: "david@123.com", password: "123456", password_confirm
 post1 = peter.posts.create(title: "first post", content: Faker::Hipster.paragraph(10, true, 4))
 post2 = peter.posts.create(title: "second post", content: Faker::Hipster.paragraph(10, true, 4))
 10.times do
-  User.all[Random.rand(12)].posts.create(title: Faker::Hipster.sentence, content: Faker::Hipster.paragraph(Random.rand(12), true, 4))
+  User.all[Random.rand(12)].posts.create(title: Faker::Hipster.sentence, content: Faker::Hipster.paragraph(Random.rand(12)+1, true, 4))
 end
 
 #? categories
