@@ -17,6 +17,8 @@ gem 'google-api-client', '~> 0.7.1',require: 'google/api_client'
 gem 'dotenv-rails', :groups => [:development, :test]
 #fb_graph
 gem 'fb_graph'
+#for avatar
+gem 'paperclip'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.6'
