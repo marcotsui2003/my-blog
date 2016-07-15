@@ -40,6 +40,9 @@ class Post < ActiveRecord::Base
 
   def categories_attributes=(category_attributes)
     index = category_attributes.values.map do |category_name|
+      #reject_if to remove blank not working, maybe coz using
+      #custom categories_attributes method...
+      next if category_name['name'].blank?
       Category.find_or_create_by(category_name).id
       #below wont work coz @post has not been saved:
       #self.categories << category unless self.categories.exists?(category)
