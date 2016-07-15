@@ -26,9 +26,14 @@ class RegistrationsController < Devise::RegistrationsController
     end
   end
 
+  protected
+  def after_update_path_for(resource)
+      user_posts_path(resource)
+  end
+
   private
   def user_params
-    params.require(:user).permit(:email)
+    params.require(:user).permit(:email, :avatar)
   end
 
 
