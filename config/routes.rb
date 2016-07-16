@@ -1,25 +1,27 @@
 Rails.application.routes.draw do
   devise_for :users, path_names: {sign_in: "login", sign_out: "logout"},
   controllers: {omniauth_callbacks: "omniauth_callbacks", registrations: "registrations"}
+
   devise_scope :user do
     get '/users/twitter_first_signup', to:"registrations#twitter_new", as: 'new_twitter_registration'
     post '/users/twitter_first_signup', to:"registrations#twitter_create"
   end
+
   resources :authorizations
+
   resources :users  do
-    #resources :posts, only: [:index], as: 'root'
     resources :posts, only: [:create, :new, :update, :edit, :destroy]
   end
-  get '/users/:user_id/posts' => 'posts#index', as: 'user_root'
 
-  resources :posts do
+  get '/posts' => 'posts#index', as: 'user_root'
+
+  resources :posts, only: [:show, :index] do
     resources :comments, only: [:new, :create, :update, :edit, :destroy]
     resources :replies, only: [:new, :create, :update, :edit, :destroy]
   end
 
   root 'welcome#home'
 
-  resources :posts, only: [:index, :show]
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
