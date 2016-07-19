@@ -1,3 +1,10 @@
-<h1>Wecome to My Blog!<h1/>
-
-<%= link_to "Signout", destroy_user_session_path, method: :delete %>
+<div class="jumbotron">
+  <div class="container">
+    <h1>Welcome to My Blog!</h1>
+    <h4>Share your thoughts!</h4>
+    <br><br><br><br><br><br><br><br>
+    <p><%= link_to "Signup &raquo".html_safe, new_user_registration_path, class: "btn btn-primary btn-lg", role: "button" %>
+       <%= link_to "Login &raquo".html_safe, new_user_session_path, class: "btn btn-primary btn-lg", role: "button" %>
+    </p>
+  </div>
+</div>
