@@ -1,0 +1,23 @@
+.jumbotron {
+
+   margin: 0px;
+   background-image: url(asset-path('universe.png'));
+   background-position: center;
+   background-repeat: no-repeat;
+   color: white;    text-align: center;
+   min-height: 720px;
+   height: 960px;
+   /*can use viewport unit here -e.g.height: 100vh;*/
+   a {
+     display: inline-block;
+
+   }
+   a:first-child {
+     margin-right: 20px;
+   }
+
+   a + a {
+     margin-left: 20px;
+   }
+
+}
