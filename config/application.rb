@@ -33,7 +33,8 @@ module MyBlog
     config.active_record.raise_in_transactional_callbacks = true
     # To turn off the layout for the sessions controller
     config.to_prepare do
-      Devise::SessionsController.layout false
+      #Devise::SessionsController.layout false
+      #Devise::RegistrationsController.layout false
     end
   end
 end
