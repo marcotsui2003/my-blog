@@ -1,10 +1,12 @@
 .jumbotron {
 
    margin: 0px;
-   background-image: url(asset-path('universe.png'));
+   background-image: url(asset-path('aleysa.jpg'));
    background-position: center;
    background-repeat: no-repeat;
-   color: white;    text-align: center;
+   background-size: cover;
+   color: white;
+   text-align: center;
    min-height: 720px;
    height: 960px;
    /*can use viewport unit here -e.g.height: 100vh;*/
@@ -18,6 +20,13 @@
 
    a + a {
      margin-left: 20px;
+   }
+
+   p.photographer {
+     position: fixed;;
+     font-size: 16px;
+     right: 25px;
+     bottom: 0px;
    }
 
 }
