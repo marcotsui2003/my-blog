@@ -49,7 +49,7 @@ class PostsController < ApplicationController
     @post = @user.posts.find_by(id: params[:id])
     @post.attributes = post_params
     if @post.save
-      flash[:notice] = "Post successfully created."
+      flash[:notice] = "Post successfully edited."
       return redirect_to post_path @post
     else
       render 'edit'
