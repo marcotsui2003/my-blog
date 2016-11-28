@@ -15,9 +15,9 @@ class User < ActiveRecord::Base
   #user.replies is called
   has_many :replies, foreign_key: :replier_id, inverse_of: :replier
   #avatar using paperclip
-  # remember to refresh after modifying styles  by >>rake paperclip:refresh:missing_styles in CL
+  # remember to refresh after modifying styles  by >>rake paperclip:refresh:thumbnails CLASS=User in CL
   # missing.png should be in assets/images/:style/missing.png
-  has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "50x50#" }, :default_url => ":style/missing.jpg"
+  has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "25x25#" }, :default_url => ":style/missing.jpg"
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
 
   def self.new_with_session(params,session)
