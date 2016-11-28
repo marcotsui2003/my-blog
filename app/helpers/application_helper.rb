@@ -22,9 +22,4 @@ module ApplicationHelper
       reply.replier == current_user
     end
   end
-
-
-
-
-
 end
