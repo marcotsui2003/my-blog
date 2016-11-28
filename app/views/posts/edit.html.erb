@@ -1,26 +1,53 @@
-
-<% if @post.errors.any? %>
-  <div id="error_explanation">
-    <h2>
-      <%= pluralize(@post.errors.count, "error") %>
-      prohibited this post from being saved:
-    </h2>
-    <ul>
-    <% @post.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
-    <% end %>
-    </ul>
-  </div>
-<% end %>
-
-<%= form_for [@user, @post] do |f| %>
-  <%= f.label :title %>
-  <%= f.text_field :title %>
-  <%= f.label :content %>
-  <%= f.text_area :content %>
-  <%= f.fields_for :categories do |category| %>
-    <%= category.label :name %>
-    <%= category.text_field :name %>
+<div class="container">
+  <% if @post.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@post.errors.count, "error") %>
+        prohibited this post from being saved:
+      </h2>
+      <ul>
+      <% @post.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
   <% end %>
-  <%= f.submit %>
-<% end %>
+
+<%= form_for [@user, @post], html: {class: 'form-horizontal'} do |f| %>
+  <fieldset>
+    <legend>
+      <h2>Edit post</h2>
+    </legend>
+
+    <div class="form-group">
+      <%= f.label :title, "Title:",class: "col-sm-2  control-label" %>
+      <div class= "col-sm-6 col-md-6">
+        <%= f.text_field :title, class: "form-control" %>
+      </div>
+     </div>
+
+    <div class="form-group">
+      <%= f.label :content,  "Content:",class: "col-sm-2  control-label" %>
+        <div class= "col-sm-6 col-md-6">
+          <%= f.text_area :content, class:"form-control", rows: 20 %>
+        </div>
+    </div>
+
+    <%= f.fields_for :categories do |category| %>
+      <div class="form-group">
+        <%= category.label :name, "Category #{category.index + 1} ", class: "col-sm-2 control-label" %>
+        <div class= "col-sm-3 col-md-3">
+          <%= category.text_field :name, class: "form-control", placeholder: "Enter a new category here." %>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-2">
+        <%= f.submit "Edit post", class: "btn btn-default" %>
+      </div>
+    </div>
+
+    <% end %>
+  </fieldset>
+</div>

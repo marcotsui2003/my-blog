@@ -1,10 +1,21 @@
 
-<%= form_tag("/posts", method: "get") do %>
-  <%= select_tag "blogger_id", options_from_collection_for_select(User.all, "id", "email", @blogger_id), include_blank: true,prompt: 'Select blogger' %>
-  <%= select_tag "date", options_for_select(["Today", "This week", "Older posts"], @date), include_blank: true, prompt: 'Select Date' %>
-  <%= select_tag "category_id", options_from_collection_for_select(Category.all, "id", "name", @category_id), include_blank: true, prompt: 'Select Categories' %>
-  <%= submit_tag "Filter" %>
-<% end %>
+<div class="posts-selection">
+  <%= form_tag("/posts", method: "get", class: "form-inline") do %>
+    <div class="form-group">
+      <%= select_tag "blogger_id", options_from_collection_for_select(User.all, "id", "email", @blogger_id), include_blank: true,prompt: 'Select blogger', class: "selectpicker" %>
+    </div>
+    <div class="form-group">
+      <%= select_tag "date", options_for_select(["Today", "This week", "Older posts"], @date), include_blank: true, prompt: 'Select Date', class: "selectpicker" %>
+    </div>
+    <div class="form-group">
+      <%= select_tag "category_id", options_from_collection_for_select(Category.all, "id", "name", @category_id), include_blank: true, prompt: 'Select Categories', class: "selectpicker" %>
+    </div>
+    <div class="form-group">
+    <%= submit_tag "Filter", class: "btn btn-default" %>
+  </div>
+  <% end %>
+</div>
+
 
 <% if @posts.blank? %>
   <%= "No post matches the criteria" %>
@@ -13,5 +24,3 @@
     <%= render partial: 'post', collection: @posts  %>
   </ul>
 <% end %>
-
-<%= link_to "Add new post", new_user_post_path(current_user) %>

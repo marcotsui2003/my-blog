@@ -1,6 +1,15 @@
-   <% i =post_counter + 1 %>
-   <li><%= i %>. <%= link_to post.title, post_path(post) %>| <%= post.created_at %> |
-     <%= image_tag post.user.avatar.url(:thumb) %>|<%= post.user.email %></li>
-    <%= button_to "Edit post", edit_user_post_path(post.user, post), {method:'get'} if own_post?(post) %>
-    <%= button_to "Add comment", new_post_comment_path(post.id), method: 'get' %>
-    <%= button_to "Delete post", user_post_path(post.user, post), {method:'delete'} if own_post?(post) %>
+<div class="post">
+  <% i =post_counter + 1 %>
+  <h2><%= i %>. <%= link_to post.title, post_path(post) %></h2>
+  <div class="post-body">
+      <%= truncate(post.content, length: 500) %>...
+  </div>
+  <div class="post-actions">
+    <% if own_post?(post) %>
+      <%= link_to "Edit post", edit_user_post_path(post.user, post), {method:'get'} %> |
+      <%= link_to "Delete post", user_post_path(post.user, post), method:'delete', data:{confirm: "Are you sure?"} if own_post?(post) %> |
+    <% end %>
+    <%= link_to "Add comment", new_post_comment_path(post.id), method: 'get' %> |
+    <%= post.created_at %> | by <%= post.user.email %> <%= image_tag post.user.avatar.url(:thumb) %>
+  </div>
+</div>

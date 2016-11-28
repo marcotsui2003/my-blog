@@ -1,13 +1,22 @@
 <li>
-  by <%= reply.replier.email %>, at <%= reply.created_at %><br>
-  <%= reply.content %>
-  <%= button_to "Edit reply", edit_post_reply_path(reply.post, reply),method: 'get' if can_edit_reply?(reply) %>
-  <%= button_to "Reply", new_post_reply_path(reply.post),method: 'get',:params => {id: reply.id, type: "Reply"} %>
+  <div class="panel panel-default">
+   <div class="panel-heading">by <%= reply.replier.email %>, at <%= reply.created_at %></div>
+     <div class="panel-body">
+       <div><%= reply.content %></div>
+       <% if can_edit_reply?(reply)  %>
+         <%= link_to "Edit reply", edit_post_reply_path(reply.post, reply),method: 'get' %> |
+       <% end %>
+       <%= link_to "Reply", new_post_reply_path(reply.post, id: reply.id, type: "Reply"), method: 'get'  %>
+       <% unless reply.replies.blank?  %>
+       <ul>
+         <!-- need to add locals:{post: post if there is no association between post and reply}
+          i.e post is used instead of reply.post in new_post_reply_path
+          -->
+          <%= render partial: "reply", collection: reply.replies %>
+       </ul>
+       <% end %>
+     </div>
+   </div>
 
-  <ul>
-    <!-- need to add locals:{post: post if there is no association between post and reply}
-     i.e post is used instead of reply.post in new_post_reply_path
-     -->
-    <%= render partial: "reply", collection: reply.replies unless reply.replies.blank? %>
-  </ul>
+
 </li>

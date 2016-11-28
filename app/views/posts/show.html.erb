@@ -1,3 +1,4 @@
+<div class="post">
 <% if @post.errors.any? %>
   <div id="error_explanation">
     <h2>
@@ -12,20 +13,28 @@
   </div>
 <% end %>
 
-<%= @post.title %> by <%= @post.user.email %>, created at <%= @post.created_at %><br>
-<%= @post.content %><br>
+<h1><%= @post.title %></h1>
+<div class="post-body">
+<%= @post.content %>
+<div class="post-info">
 Categories:<% @post.categories.each do |category| %>
-  <%= category.name %>
-<% end %>
-<%= button_to "Add comment", new_post_comment_path(@post.id), method: 'get' %>
-<%= button_to "Edit post", edit_user_post_path(@post.user, @post), {method:'get'} if own_post?(@post) %>
-<%= button_to "Delete post", user_post_path(@post.user, @post), {method:'delete'} if own_post?(@post) %>
+  <span class="badge badge-default"><%= category.name %></span>
+<% end %><br>
+<%= @post.created_at %> | by <%= @post.user.email %> <%= image_tag @post.user.avatar.url(:thumb) %>
+<br>
+<div class="container">
+  <%= link_to "Add comment", new_post_comment_path(@post.id), method: 'get', class: "btn btn-default" %>
+  <%= link_to "Edit post", edit_user_post_path(@post.user, @post), method:'get', class: "btn btn-default" if own_post?(@post) %>
+  <%= link_to "Delete post", user_post_path(@post.user, @post), method:'delete', class: "btn btn-danger", data:{confirm: "Are you sure?"} if own_post?(@post) %>
+</div>
+</div>
+</div>
 
+<div class="comments">
+  <h4>Comments:</h4>
+  <ul>
+    <%= render partial: "comment", collection: @comments %>
+  </ul>
 
-Comments:<br>
-<ul>
-  <%= render partial: "comment", collection: @comments %>
-</ul>
-
-
-<%= link_to "All posts", posts_path %>
+</div>
+</div>

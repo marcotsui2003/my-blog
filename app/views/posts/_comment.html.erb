@@ -1,12 +1,20 @@
 
 <%  if !comment.nil? %>
-  <li>
-    by <%= comment.commenter.email %>, at <%= comment.created_at %><br>
-    <%= comment.content %>
-    <%= button_to "Edit comment", edit_post_comment_path(comment.post, comment), {method:'get'} if can_edit_comment?(comment) %>
-    <%= button_to "Reply", new_post_reply_path(comment.post),method: 'get',:params => {id: comment.id, type: "Comment"} %>
-    <ul>
-      <%= render partial: "reply", collection: comment.replies, locals:{post: comment.post} unless comment.replies.blank? %>
-    </ul>
+  <li >
+    <div class="panel panel-default">
+     <div class="panel-heading">by <%= comment.commenter.email %>, at <%= comment.created_at %></div>
+       <div class="panel-body">
+         <div><%= comment.content %></div>
+         <% if can_edit_comment?(comment)  %>
+          <%= link_to "Edit comment", edit_post_comment_path(comment.post, comment), method:'get' %> |
+         <% end %>
+         <%= link_to "Reply", new_post_reply_path(comment.post,id: comment.id, type: "Comment"),method: 'get'%>
+         <% unless comment.replies.blank? %>
+          <ul>
+             <%= render partial: "reply", collection: comment.replies, locals:{post: comment.post}  %>
+           </ul>
+        <% end %>
+       </div>
+    </div>
   </li>
 <% end %>
