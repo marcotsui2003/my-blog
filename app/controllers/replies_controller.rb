@@ -62,7 +62,7 @@ class RepliesController < ApplicationController
 
   def right_to_edit_reply?
     reply = Reply.find_by(id: params[:id])
-    unless  reply.post.user == current_user && !reply.nil?
+    unless  reply.replier == current_user && !reply.nil?
       return redirect_to post_path(params[:post_id]),
       alert: "You do not have right to create/modify this reply."
     end
