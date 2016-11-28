@@ -1,0 +1,40 @@
+div.post {
+  position: relative;
+  width: 75%;
+  margin: 50px auto;
+}
+
+div.post {
+  .post-body {
+  background-color: #EEE8D5; /*#FDF6E3;*/
+  border-radius: 5px;
+  font-size: 18px;
+  padding: 30px 20px;
+  text-align: justify;
+  margin-bottom: 20px;
+  }
+  .post-info{
+    font-size: 12px;
+    margin-top: 25px;
+  }
+  ul {
+    margin: 20px auto;
+  }
+}
+
+div.posts-selection {
+ text-align: center;
+}
+
+.comments ul {
+  list-style-type: none;
+}
+
+div.repliable {
+  margin: 5px 0px 20px 0px;
+  border-color: #D3D3D3;
+  border-width: 1px;
+  border-radius: 5px;
+  border-style:solid;
+  padding: 10px 10px;
+}
