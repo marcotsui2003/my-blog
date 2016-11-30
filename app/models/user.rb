@@ -15,6 +15,8 @@ class User < ActiveRecord::Base
   #foreign_key is necessary here otherwise replies.user_id is used instead when
   #user.replies is called
   has_many :replies, foreign_key: :replier_id, inverse_of: :replier
+  has_many :ratings, foreign_key: :rater_id, inverse_of: :rater
+  has_many :rated_recipes, through: :ratings, source: :recipe
   #avatar using paperclip
   # remember to refresh after modifying styles  by >>rake paperclip:refresh:thumbnails CLASS=User in CL
   # missing.png should be in assets/images/:style/missing.png
