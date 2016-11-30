@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161130170748) do
+ActiveRecord::Schema.define(version: 20161130201255) do
 
   create_table "authorizations", force: :cascade do |t|
     t.string   "provider"
@@ -34,9 +34,21 @@ ActiveRecord::Schema.define(version: 20161130170748) do
 
   create_table "ingredients", force: :cascade do |t|
     t.string   "name"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.string   "quantity",   default: "0", null: false
+  end
+
+  create_table "ratings", force: :cascade do |t|
+    t.integer  "grade"
+    t.integer  "rater_id"
+    t.integer  "recipe_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  add_index "ratings", ["rater_id"], name: "index_ratings_on_rater_id"
+  add_index "ratings", ["recipe_id"], name: "index_ratings_on_recipe_id"
 
   create_table "recipe_ingredients", force: :cascade do |t|
     t.integer  "recipe_id"
