@@ -5,6 +5,8 @@ class Recipe < ActiveRecord::Base
   has_many :comments, inverse_of: :recipe, dependent: :destroy
   has_many :commenters, through: :comments
   has_many :replies, inverse_of: :recipe, dependent: :destroy
+  has_many :ratings, inverse_of: :recipe
+  has_many :raters, through: :ratings
   accepts_nested_attributes_for :ingredients
 
   validates_presence_of :title, :content
