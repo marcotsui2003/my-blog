@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160715031509) do
+ActiveRecord::Schema.define(version: 20161130170748) do
 
   create_table "authorizations", force: :cascade do |t|
     t.string   "provider"
@@ -24,28 +24,28 @@ ActiveRecord::Schema.define(version: 20160715031509) do
     t.string   "username"
   end
 
-  create_table "categories", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "comments", force: :cascade do |t|
     t.integer  "commenter_id"
-    t.integer  "post_id"
+    t.integer  "recipe_id"
     t.text     "content"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end
 
-  create_table "post_categories", force: :cascade do |t|
-    t.integer  "post_id"
-    t.integer  "category_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+  create_table "ingredients", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "posts", force: :cascade do |t|
+  create_table "recipe_ingredients", force: :cascade do |t|
+    t.integer  "recipe_id"
+    t.integer  "ingredient_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  create_table "recipes", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "title"
     t.text     "content"
@@ -60,10 +60,10 @@ ActiveRecord::Schema.define(version: 20160715031509) do
     t.integer  "replier_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
-    t.integer  "post_id"
+    t.integer  "recipe_id"
   end
 
-  add_index "replies", ["post_id"], name: "index_replies_on_post_id"
+  add_index "replies", ["recipe_id"], name: "index_replies_on_recipe_id"
   add_index "replies", ["repliable_type", "repliable_id"], name: "index_replies_on_repliable_type_and_repliable_id"
   add_index "replies", ["replier_id"], name: "index_replies_on_replier_id"
 
