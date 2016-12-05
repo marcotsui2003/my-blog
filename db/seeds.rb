@@ -53,4 +53,29 @@ end
   reply.recipe = reply.repliable.recipe
   reply.save
 end
+
+#=begin
+30.times do
+  User.all[rand(12)].comments.create(recipe: Recipe.all[Random.rand(12)],content: Faker::Hipster.sentences(Random.rand(9)+1).join(" "))
+end
+
+40.times do
+  reply = Comment.all[Random.rand(30)].replies.create(replier: User.all[Random.rand(12)], content: Faker::Hipster.sentences(Random.rand(4)+1).join(" ") )
+  reply.recipe = reply.repliable.recipe
+  reply.save
+end
+
+100.times do
+  reply = Reply.all[Random.rand(40)].replies.create(replier: User.all[Random.rand(12)], content: Faker::Hipster.sentences(1).join(" ") )
+  reply.recipe = reply.repliable.recipe
+  reply.save
+end
+
+User.all.each do |user|
+  10.times do
+    rating = user.ratings.find_or_initialize_by(recipe: Recipe.all[rand(60)])
+    rating.grade = rand(10)+1
+    rating.save
+  end
+end
 #=end
