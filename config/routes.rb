@@ -10,12 +10,12 @@ Rails.application.routes.draw do
   resources :authorizations
 
   resources :users  do
-    resources :posts, only: [:create, :new, :update, :edit, :destroy]
+    resources :recipes, only: [:create, :new, :update, :edit, :destroy]
   end
 
-  get '/posts' => 'posts#index', as: 'user_root'
+  get '/recipes' => 'recipes#index', as: 'user_root'
 
-  resources :posts, only: [:show, :index] do
+  resources :recipes, only: [:show, :index] do
     resources :comments, only: [:new, :create, :update, :edit, :destroy]
     resources :replies, only: [:new, :create, :update, :edit, :destroy]
   end
