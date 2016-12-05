@@ -6,42 +6,28 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+User.delete_all
+Recipe.delete_all
+Ingredient.delete_all
+Comment.delete_all
+Reply.delete_all
+Authorization.delete_all
 
-#12 users
+
+
+#12 users, 5 recipes each, each recipes has
+
 peter = User.create(email: "peter@123.com", password: "123456", password_confirmation:"123456")
 mary = User.create(email: "mary@123.com", password: "123456", password_confirmation:"123456")
 david = User.create(email: "david@123.com", password: "123456", password_confirmation:"123456")
 9.times {User.create(email: Faker::Internet.free_email, password: "123456", password_confirmation:"123456")}
 
-#12 posts
-post1 = peter.posts.create(title: "first post", content: Faker::Hipster.paragraph(10, true, 4))
-post2 = peter.posts.create(title: "second post", content: Faker::Hipster.paragraph(10, true, 4))
-10.times do
-  User.all[Random.rand(12)].posts.create(title: Faker::Hipster.sentence, content: Faker::Hipster.paragraph(Random.rand(12)+1, true, 4))
-end
-
-#? categories
-post1.categories.create(name: "science")
-post1.categories.create(name: "fiction")
-post2.categories.create(name: "horror")
-post2.categories.create(name: "history")
-12.times do
-  Post.all[Random.rand(12)].categories.find_or_create_by(name: Faker::Hipster.word)
-end
-
-
-30.times do
-  User.all[Random.rand(12)].comments.create(post: Post.all[Random.rand(12)],content: Faker::Hipster.sentences(Random.rand(9)+1).join(" "))
-end
-
-40.times do
-  reply = Comment.all[Random.rand(30)].replies.create(replier: User.all[Random.rand(12)], content: Faker::Hipster.sentences(Random.rand(4)+1).join(" ") )
-  reply.post = reply.repliable.post
-  reply.save
-end
-
-100.times do
-  reply = Reply.all[Random.rand(40)].replies.create(replier: User.all[Random.rand(12)], content: Faker::Hipster.sentences(1).join(" ") )
-  reply.post = reply.repliable.post
-  reply.save
+(0..11).each do |i|
+  user = User.all[i]
+  5.times do
+    recipe = user.recipes.create(title: Faker::Lorem.word, content: Faker::Hipster.paragraph(10, true, 4))
+    (rand(8)+1).times do
+      recipe.ingredients.create(name: Faker::Food.ingredient, quantity: Faker::Food.measurement)
+    end
+  end
 end
