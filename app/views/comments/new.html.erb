@@ -13,17 +13,17 @@
     </div>
   <% end %>
 
-  <div class="post">
-    <h1><%= @post.title %></h1>
-    <div class="post-body">
-      <%= @post.content %>
+  <div class="recipe">
+    <h1><%= @recipe.title %></h1>
+    <div class="recipe-body">
+      <%= @recipe.content %>
     </div>
   </div>
 
 
   <!-- please note the array format for nested resources -->
   <div class="col-sm-offset-2 col-sm-8">
-    <%= form_for [@post, @comment], html: {class: 'form-horizontal'} do |f| %>
+    <%= form_for [@recipe, @comment], html: {class: 'form-horizontal'} do |f| %>
       <fieldset>
         <legend>
           <h4>Please add your comment:</h4>

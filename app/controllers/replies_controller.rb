@@ -3,30 +3,30 @@ class RepliesController < ApplicationController
   before_action :right_to_edit_reply?, only: [:edit, :update]
 
   def new
-    @post = Post.find_by(id: params[:post_id])
-    return posts_path if @post.nil?
+    @recipe = Recipe.find_by(id: params[:recipe_id])
+    return recipes_path if @recipe.nil?
     if params[:type] != "Comment" && params[:type]!= "Reply"
       flash["alert"] = "Invalid message type, reply failed."
-      return redirect_to post_path @post
+      return redirect_to recipe_path @recipe
     end
     @repliable = Object.const_get(params[:type]).find_by(id: params[:id])
-    return redirect_to post_path(post), alert: 'No such comment or reply.' unless !@repliable.nil?
+    return redirect_to recipe_path(recipe), alert: 'No such comment or reply.' unless !@repliable.nil?
     @reply = @repliable.replies.build( repliable_type: @repliable.class.name,
                                        repliable_id: @repliable.id)
   end
 
   def create
-    @post= Post.find(params[:post_id])
+    @recipe= Recipe.find(params[:recipe_id])
     @repliable = Object.const_get(reply_params[:repliable_type]).find_by(id: reply_params[:repliable_id])
-    if @post.nil?
-      flash[:alert] = "No such post exists."
-      return redirect_to posts_path
+    if @recipe.nil?
+      flash[:alert] = "No such recipe exists."
+      return redirect_to recipes_path
     else
-      @reply = @post.replies.build(reply_params)
+      @reply = @recipe.replies.build(reply_params)
       @reply.replier_id = current_user.id
       if @reply.save
         flash[:notice] = "reply successfully created."
-        return redirect_to post_path @post
+        return redirect_to recipe_path @recipe
       else
         render 'new'
       end
@@ -34,20 +34,20 @@ class RepliesController < ApplicationController
   end
 
   def edit
-    @post = Post.find_by(id: params[:post_id])
-    return posts_path, alert: "No such post." if @post.nil?
-    @reply = @post.replies.find_by(id: params[:id])
+    @recipe = Recipe.find_by(id: params[:recipe_id])
+    return recipes_path, alert: "No such recipe." if @recipe.nil?
+    @reply = @recipe.replies.find_by(id: params[:id])
     @repliable = Object.const_get(@reply.repliable_type).find_by(id: @reply.repliable_id)
   end
 
   def update
-    @post = Post.find_by(id: params[:post_id])
-    @reply = @post.replies.find_by(id: params[:id])
+    @recipe = Recipe.find_by(id: params[:recipe_id])
+    @reply = @recipe.replies.find_by(id: params[:id])
     @repliable = Object.const_get(@reply.repliable_type).find_by(id: @reply.repliable_id)
-    return posts_path, alert: "No such post." if @post.nil?
+    return recipes_path, alert: "No such recipe." if @recipe.nil?
     @reply.attributes = reply_params
     if @reply.save
-      return redirect_to post_path(@post), notice: "Reply successfully updated."
+      return redirect_to recipe_path(@recipe), notice: "Reply successfully updated."
     else
       render "edit"
     end
@@ -63,7 +63,7 @@ class RepliesController < ApplicationController
   def right_to_edit_reply?
     reply = Reply.find_by(id: params[:id])
     unless  reply.replier == current_user && !reply.nil?
-      return redirect_to post_path(params[:post_id]),
+      return redirect_to recipe_path(params[:recipe_id]),
       alert: "You do not have right to create/modify this reply."
     end
   end

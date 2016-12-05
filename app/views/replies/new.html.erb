@@ -23,7 +23,7 @@
     <fieldset>
       <legend><h4>Please add your reply:</h4></legend>
       <!-- please note the array format for nested resources -->
-      <%= form_for [@post, @reply], html:{class: "form-horizontal"} do |f| %>
+      <%= form_for [@recipe, @reply], html:{class: "form-horizontal"} do |f| %>
         <%= f.hidden_field :repliable_type %>
         <%= f.hidden_field :repliable_id%>
         <div class="form-group">

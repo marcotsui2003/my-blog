@@ -3,23 +3,23 @@ class CommentsController < ApplicationController
   before_action :right_to_edit_comment?, except: [:index, :show, :new, :create]
 
   def new
-    @post= Post.find_by(id: params[:post_id])
+    @recipe= Recipe.find_by(id: params[:recipe_id])
     #must user build instead of create, otherwise form_for will
     #be sent to #update action!
-    @comment = @post.comments.build
+    @comment = @recipe.comments.build
   end
 
   def create
-    @post = Post.find(params[:post_id])
-    if @post.nil?
-      flash[:alert] = "No such post exists."
-      return redirect_to posts_path
+    @recipe = Recipe.find(params[:recipe_id])
+    if @recipe.nil?
+      flash[:alert] = "No such recipe exists."
+      return redirect_to recipes_path
     else
-      @comment = @post.comments.build(content: comment_params[:content],
+      @comment = @recipe.comments.build(content: comment_params[:content],
                                     commenter: current_user)
       if @comment.save
         flash[:notice] = "Comment successfully created."
-        return redirect_to post_path @post
+        return redirect_to recipe_path @recipe
       else
         render 'new'
       end
@@ -27,19 +27,19 @@ class CommentsController < ApplicationController
   end
 
   def edit
-    @post = Post.find_by(id: params[:post_id])
-    return redirect_to posts_path, alert: "No such post." if @post.nil?
-    @comment = @post.comments.find_by(id: params[:id])
-    return redirect_to post_path(@post), alert: "Comment not found." if @comment.nil?
+    @recipe = Recipe.find_by(id: params[:recipe_id])
+    return redirect_to recipes_path, alert: "No such recipe." if @recipe.nil?
+    @comment = @recipe.comments.find_by(id: params[:id])
+    return redirect_to recipe_path(@recipe), alert: "Comment not found." if @comment.nil?
   end
 
   def update
-    @post = Post.find_by(id: params[:post_id])
-    @comment = @post.comments.find_by(id: params[:id])
+    @recipe = Recipe.find_by(id: params[:recipe_id])
+    @comment = @recipe.comments.find_by(id: params[:id])
     @comment.attributes = comment_params
     if @comment.save
       flash[:notice] = "Comment successfully updated."
-      return redirect_to post_path @post
+      return redirect_to recipe_path @recipe
     else
       render 'edit'
     end
@@ -51,10 +51,10 @@ class CommentsController < ApplicationController
   end
 
   def right_to_edit_comment?
-    #can expand here to take care of non-existent posts and comments!
+    #can expand here to take care of non-existent recipes and comments!
     comment = Comment.find_by(id: params[:id])
     unless  comment.commenter == current_user && !comment.nil?
-      return redirect_to post_path(params[:post_id]),
+      return redirect_to recipe_path(params[:recipe_id]),
       alert: "You do not have right to create/modify this comment."
     end
   end

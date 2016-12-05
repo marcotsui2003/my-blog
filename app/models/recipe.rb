@@ -45,7 +45,7 @@ class Recipe < ActiveRecord::Base
       #reject_if to remove blank not working, maybe coz using
       #custom ingredients_attributes method...
       next if ingredient_name['name'].blank?
-      Category.find_or_create_by(ingredient_name).id
+      Ingredient.find_or_create_by(ingredient_name).id
       #below wont work coz @recipe has not been saved:
       #self.ingredients << ingredient unless self.ingredients.exists?(ingredient)
       #use ingredient_ids = ingredient_ids.uniq after save..

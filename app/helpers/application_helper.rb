@@ -3,8 +3,8 @@ module ApplicationHelper
     !!params[:user_id]
   end
 
-  def own_post?(post)
-    post.user_id == current_user.id
+  def own_recipe?(recipe)
+    recipe.user_id == current_user.id
   end
 
   def can_edit_comment?(comment)

@@ -1,11 +1,11 @@
-class Post < ActiveRecord::Base
+class Recipe < ActiveRecord::Base
   belongs_to :user
-  has_many :post_categories
-  has_many :categories, through: :post_categories
-  has_many :comments, inverse_of: :post, dependent: :destroy
+  has_many :recipe_ingredients
+  has_many :ingredients, through: :recipe_ingredients
+  has_many :comments, inverse_of: :recipe, dependent: :destroy
   has_many :commenters, through: :comments
-  has_many :replies, inverse_of: :post, dependent: :destroy
-  accepts_nested_attributes_for :categories
+  has_many :replies, inverse_of: :recipe, dependent: :destroy
+  accepts_nested_attributes_for :ingredients
 
   validates_presence_of :title, :content
   validates_uniqueness_of :title, scope: :user
@@ -14,15 +14,15 @@ class Post < ActiveRecord::Base
     if user_id.blank?
       self.all
     else
-      where("posts.user_id = ?" , user_id )
+      where("recipes.user_id = ?" , user_id )
     end
   end
 
-  def self.by_category(category_id)
-    if category_id.blank?
+  def self.by_ingredient(ingredient_id)
+    if ingredient_id.blank?
       self.all
     else
-      joins(:categories).where("categories.id = ?", category_id)
+      joins(:ingredients).where("ingredients.id = ?", ingredient_id)
     end
   end
 
@@ -30,33 +30,33 @@ class Post < ActiveRecord::Base
     if date.blank?
       self.all
     elsif date == "This week"
-      where("posts.created_at >= ?", Time.zone.now - 7.days)
+      where("recipes.created_at >= ?", Time.zone.now - 7.days)
     elsif date == "Today"
-      where("posts.created_at >= ?", Time.zone.today.beginning_of_day)
-    elsif date =="Older posts"
-      where("posts.created_at < ?", Time.zone.now - 7.days)
+      where("recipes.created_at >= ?", Time.zone.today.beginning_of_day)
+    elsif date =="Older recipes"
+      where("recipes.created_at < ?", Time.zone.now - 7.days)
     end
   end
 
-  def categories_attributes=(category_attributes)
-    index = category_attributes.values.map do |category_name|
+  def ingredients_attributes=(ingredient_attributes)
+    index = ingredient_attributes.values.map do |ingredient_name|
       #reject_if to remove blank not working, maybe coz using
-      #custom categories_attributes method...
-      next if category_name['name'].blank?
-      Category.find_or_create_by(category_name).id
-      #below wont work coz @post has not been saved:
-      #self.categories << category unless self.categories.exists?(category)
-      #use category_ids = category_ids.uniq after save..
+      #custom ingredients_attributes method...
+      next if ingredient_name['name'].blank?
+      Ingredient.find_or_create_by(ingredient_name).id
+      #below wont work coz @recipe has not been saved:
+      #self.ingredients << ingredient unless self.ingredients.exists?(ingredient)
+      #use ingredient_ids = ingredient_ids.uniq after save..
     end
-    unique_category_ids = index.uniq
-    self.categories.clear
-    self.category_ids = unique_category_ids
+    unique_ingredient_ids = index.uniq
+    self.ingredients.clear
+    self.ingredient_ids = unique_ingredient_ids
   end
 
 end
 
 =begin
-create_table "posts", force: :cascade do |t|
+create_table "recipes", force: :cascade do |t|
   t.integer  "user_id"
   t.string   "title"
   t.text     "content"

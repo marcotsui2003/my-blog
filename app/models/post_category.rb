@@ -1,4 +1,4 @@
-class PostCategory < ActiveRecord::Base
-  belongs_to :post
-  belongs_to :category
+class RecipeIngredient < ActiveRecord::Base
+  belongs_to :recipe
+  belongs_to :ingredient
 end
