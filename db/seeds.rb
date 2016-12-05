@@ -12,6 +12,7 @@ Ingredient.delete_all
 Comment.delete_all
 Reply.delete_all
 Authorization.delete_all
+Rating.delete_all
 
 
 
@@ -25,9 +26,31 @@ david = User.create(email: "david@123.com", password: "123456", password_confirm
 (0..11).each do |i|
   user = User.all[i]
   5.times do
-    recipe = user.recipes.create(title: Faker::Lorem.word, content: Faker::Hipster.paragraph(10, true, 4))
+    recipe = user.recipes.find_or_create_by(title: Faker::Lorem.word)
+    recipe.content = Faker::Hipster.paragraph(10, true, 4)
+    recipe.save
     (rand(8)+1).times do
-      recipe.ingredients.create(name: Faker::Food.ingredient, quantity: Faker::Food.measurement)
+      i = recipe.ingredients.find_or_create_by(name: Faker::Food.ingredient)
+      i.quantity = Faker::Food.measurement
+      i.save
+      binding.pry unless i.persisted?
     end
   end
 end
+#=begin
+30.times do
+  User.all[rand(12)].comments.create(recipe: Recipe.all[Random.rand(12)],content: Faker::Hipster.sentences(Random.rand(9)+1).join(" "))
+end
+
+40.times do
+  reply = Comment.all[Random.rand(30)].replies.create(replier: User.all[Random.rand(12)], content: Faker::Hipster.sentences(Random.rand(4)+1).join(" ") )
+  reply.recipe = reply.repliable.recipe
+  reply.save
+end
+
+100.times do
+  reply = Reply.all[Random.rand(40)].replies.create(replier: User.all[Random.rand(12)], content: Faker::Hipster.sentences(1).join(" ") )
+  reply.recipe = reply.repliable.recipe
+  reply.save
+end
+#=end
