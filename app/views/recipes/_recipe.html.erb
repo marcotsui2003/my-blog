@@ -1,0 +1,15 @@
+<div class="recipe">
+  <% i =recipe_counter + 1 %>
+  <h2><%= i %>. <%= link_to recipe.title, recipe_path(recipe) %></h2>
+  <div class="recipe-body">
+      <%= truncate(recipe.content, length: 500) %>...
+  </div>
+  <div class="recipe-actions">
+    <% if own_recipe?(recipe) %>
+      <%= link_to "Edit recipe", edit_user_recipe_path(recipe.user, recipe), {method:'get'} %> |
+      <%= link_to "Delete recipe", user_recipe_path(recipe.user, recipe), method:'delete', data:{confirm: "Are you sure?"} if own_recipe?(recipe) %> |
+    <% end %>
+    <%= link_to "Add comment", new_recipe_comment_path(recipe.id), method: 'get' %> |
+    <%= recipe.created_at %> | by <%= recipe.user.email %> <%= image_tag recipe.user.avatar.url(:thumb) %>
+  </div>
+</div>

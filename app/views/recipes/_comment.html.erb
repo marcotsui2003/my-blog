@@ -1,0 +1,20 @@
+
+<%  if !comment.nil? %>
+  <li >
+    <div class="panel panel-default">
+     <div class="panel-heading">by <%= comment.commenter.email %>, at <%= comment.created_at %></div>
+       <div class="panel-body">
+         <div><%= comment.content %></div>
+         <% if can_edit_comment?(comment)  %>
+          <%= link_to "Edit comment", edit_recipe_comment_path(comment.recipe, comment), method:'get' %> |
+         <% end %>
+         <%= link_to "Reply", new_recipe_reply_path(comment.recipe,id: comment.id, type: "Comment"),method: 'get'%>
+         <% unless comment.replies.blank? %>
+          <ul>
+             <%= render partial: "reply", collection: comment.replies, locals:{recipe: comment.recipe}  %>
+           </ul>
+        <% end %>
+       </div>
+    </div>
+  </li>
+<% end %>

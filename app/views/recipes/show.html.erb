@@ -1,0 +1,40 @@
+<div class="recipe">
+<% if @recipe.errors.any? %>
+  <div id="error_explanation">
+    <h2>
+      <%= pluralize(@recipe.errors.count, "error") %>
+      prohibited this recipe from being saved:
+    </h2>
+    <ul>
+    <% @recipe.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<h1><%= @recipe.title %></h1>
+<div class="recipe-body">
+<%= @recipe.content %>
+<div class="recipe-info">
+Ingredients:<% @recipe.ingredients.each do |ingredient| %>
+  <span class="badge badge-default"><%= ingredient.name %></span>
+<% end %><br>
+<%= @recipe.created_at %> | by <%= @recipe.user.email %> <%= image_tag @recipe.user.avatar.url(:thumb) %>
+<br>
+<div class="container">
+  <%= link_to "Add comment", new_recipe_comment_path(@recipe.id), method: 'get', class: "btn btn-default" %>
+  <%= link_to "Edit recipe", edit_user_recipe_path(@recipe.user, @recipe), method:'get', class: "btn btn-default" if own_recipe?(@recipe) %>
+  <%= link_to "Delete recipe", user_recipe_path(@recipe.user, @recipe), method:'delete', class: "btn btn-danger", data:{confirm: "Are you sure?"} if own_recipe?(@recipe) %>
+</div>
+</div>
+</div>
+
+<div class="comments">
+  <h4>Comments:</h4>
+  <ul>
+    <%= render partial: "comment", collection: @comments %>
+  </ul>
+
+</div>
+</div>

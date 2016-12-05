@@ -1,0 +1,22 @@
+<li>
+  <div class="panel panel-default">
+   <div class="panel-heading">by <%= reply.replier.email %>, at <%= reply.created_at %></div>
+     <div class="panel-body">
+       <div><%= reply.content %></div>
+       <% if can_edit_reply?(reply)  %>
+         <%= link_to "Edit reply", edit_recipe_reply_path(reply.recipe, reply),method: 'get' %> |
+       <% end %>
+       <%= link_to "Reply", new_recipe_reply_path(reply.recipe, id: reply.id, type: "Reply"), method: 'get'  %>
+       <% unless reply.replies.blank?  %>
+       <ul>
+         <!-- need to add locals:{recipe: recipe if there is no association between recipe and reply}
+          i.e recipe is used instead of reply.recipe in new_recipe_reply_path
+          -->
+          <%= render partial: "reply", collection: reply.replies %>
+       </ul>
+       <% end %>
+     </div>
+   </div>
+
+
+</li>
