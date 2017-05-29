@@ -35,11 +35,12 @@ class User < ActiveRecord::Base
   end
 
   def self.from_omniauth(auth, current_user)
-    authorization = Authorization.where(:provider => auth.provider, :uid => auth.uid.to_s, :token => auth.credentials.token, :secret => auth.credentials.secret).first_or_initialize
+    authorization = Authorization.where(:provider => auth.provider, :uid => auth.uid.to_s).first_or_initialize
+    #, :token => auth.credentials.token, :secret => auth.credentials.secret
     if authorization.user.blank?
       #authorizations created previously must belong to a user(should add dependent :destroy)
       #so authorization.user blank means it is created for the first time
-      user = current_user || (User.where('email = ?', auth["info"]["email"]).first) # will break if use twitter without logging in
+      user = (User.where('email = ?', auth["info"]["email"]).first) || current_user # will break if use twitter without logging in
       if user.blank?
        # means that this social login not connected to any existing user accounts
        # and the user is not already logged in
@@ -54,6 +55,8 @@ class User < ActiveRecord::Base
        end
      authorization.username = auth.info.nickname
      authorization.user_id = user.id
+     authorization.token = auth.credentials.token
+     authorization.secret = auth.credentials.secret
      authorization.save
     end
     authorization.user
