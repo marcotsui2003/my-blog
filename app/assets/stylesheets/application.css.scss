@@ -14,9 +14,13 @@
  */
  @import "bootstrap-sprockets";
  @import "bootstrap";
- @import "welcome";
+ /*@import "welcome";*/
  @import "recipes";
 
  .navbar.navbar-default {
    margin-bottom: 0px;
+ }
+
+ body {
+   padding-top: 60px;
  }
