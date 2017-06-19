@@ -1,10 +1,11 @@
 body {
-  padding-top: 0px;
+  padding-top: 50px;
 }
 
 .jumbotron {
 
    margin: 0px;
+   padding-top: 0px;
    background-image: url(asset-path('aleysa.jpg'));
    background-position: center;
    background-repeat: no-repeat;
@@ -13,6 +14,8 @@ body {
    text-align: center;
    min-height: 720px;
    height: 960px;
+
+
    /*can use viewport unit here -e.g.height: 100vh;*/
    a {
      display: inline-block;
@@ -33,4 +36,8 @@ body {
      bottom: 0px;
    }
 
+}
+
+#welcome-container {
+  position: relative;
 }

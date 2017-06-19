@@ -1,0 +1,12 @@
+052717
+1. add facebook APP_id -done
+       twitter - ? -email added done
+       remove twitter specific controller actions and routes-done
+       also if already logged in , facebook login wont change the user! -done
+
+2. fix dropdown masked at the top of the pages -  done
+   add back to index link to show page ?
+   still need to fix login? (link social account different scenarios?)
+
+3. check edit profile page
+   avatar download page....
